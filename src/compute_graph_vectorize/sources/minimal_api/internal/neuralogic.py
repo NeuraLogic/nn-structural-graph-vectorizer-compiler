@@ -1,12 +1,12 @@
 from collections import defaultdict
+from collections.abc import Iterable
 from typing import Any, Protocol, Sequence
 from typing import get_args as t_get_args
 
 import jpype
 import numpy as np
 import torch
-from neuralogic.core.builder.builder import NeuralSample
-from neuralogic.core.template import Iterable
+from neuralogic.core.builder import NeuralSample
 
 from compute_graph_vectorize.facts.model import get_rule_or_fact_main_name
 from compute_graph_vectorize.facts.parser import ParserError, parse_rule_or_fact
@@ -199,7 +199,7 @@ def compute_neuralogic_neurons_per_layer(
         layers_[key] = None
 
     for sample in samples:
-        visit(sample.java_sample.query.neuron if isinstance(sample, NeuralSample) else sample)
+        visit(sample._java_sample.query.neuron if isinstance(sample, NeuralSample) else sample)
 
     layers = list(layers_.keys())
     layers.reverse()

@@ -2,7 +2,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Literal
 
-from neuralogic.core import R, Template, V
+from neuralogic.core import Model, R, V
 from neuralogic.dataset.file import FileDataset
 
 from compute_graph_vectorize.sources.neuralogic_settings import NeuralogicSettings
@@ -11,7 +11,7 @@ from .dataset import MyDataset
 
 
 def simple_template():
-    template = Template()
+    template = Model()
 
     template.add_rules(
         [(R.atom_embed(V.A)[3,] <= R.get(atom)(V.A)) for atom in ["c", "o", "br", "i", "f", "h", "n", "cl"]]
@@ -45,7 +45,7 @@ def simple_template():
 
 
 def simple_template_diff_dims():
-    template = Template()
+    template = Model()
 
     template.add_rules(
         [(R.atom_embed(V.A)[3,] <= R.get(atom)(V.A)) for atom in ["c", "o", "br", "i", "f", "h", "n", "cl"]]
@@ -81,7 +81,7 @@ def simple_template_diff_dims():
 MutagenesisTemplate = Literal["simple", "dims"]
 
 
-TEMPLATE_MAP: dict[MutagenesisTemplate, Callable[[], Template]] = {
+TEMPLATE_MAP: dict[MutagenesisTemplate, Callable[[], Model]] = {
     "simple": simple_template,
     "dims": simple_template_diff_dims,
 }

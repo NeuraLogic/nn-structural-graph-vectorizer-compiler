@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Literal, Protocol
 
-from neuralogic.core import Aggregation, R, Template, Transformation, V
+from neuralogic.core import Aggregation, Model, R, Transformation, V
 from neuralogic.dataset import Data, TensorDataset
 from neuralogic.nn.init import Glorot, Uniform
 from torch_geometric.datasets import TUDataset
@@ -12,11 +12,11 @@ from compute_graph_vectorize.sources.neuralogic_settings import NeuralogicSettin
 
 
 class _TemplateProtocol(Protocol):
-    def __call__(self, activation: Transformation, num_features: int, output_size: int, dim: int = 10) -> Template: ...
+    def __call__(self, activation: Transformation, num_features: int, output_size: int, dim: int = 10) -> Model: ...
 
 
 def _gcn(activation: Transformation, num_features: int, output_size: int, dim: int = 10):
-    template = Template()
+    template = Model()
 
     # template += (R.atom_embed(V.X)[dim, num_features] <= R.node_feature(V.X)) | [Transformation.IDENTITY]
     # template += R.atom_embed / 1 | [Transformation.IDENTITY]
@@ -40,7 +40,7 @@ def _gcn(activation: Transformation, num_features: int, output_size: int, dim: i
 
 
 def _gin(activation: Transformation, num_features: int, output_size: int, dim: int = 10):
-    template = Template()
+    template = Model()
 
     template += (R.atom_embed(V.X)[dim, num_features] <= R.node_feature(V.X)) | [Transformation.IDENTITY]
     template += R.atom_embed / 1 | [Transformation.IDENTITY]
@@ -108,7 +108,7 @@ def _gin(activation: Transformation, num_features: int, output_size: int, dim: i
 
 
 def _gsage(activation: Transformation, num_features: int, output_size: int, dim: int = 10):
-    template = Template()
+    template = Model()
 
     template += (R.atom_embed(V.X)[dim, num_features] <= R.node_feature(V.X)) | [Transformation.IDENTITY]
     template += R.atom_embed / 1 | [Transformation.IDENTITY]

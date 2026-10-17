@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from compute_graph_vectorize.datasets import MyMutagenesis
 from compute_graph_vectorize.sources.neuralogic_settings import NeuralogicSettings
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 
 
 class Neuron(TypedDict):
@@ -103,7 +103,7 @@ def get_as_colors(values: list, cmap, n: int | None = None) -> tuple[list, list,
 
 class Graph:
     def __init__(self, neural_sample: NeuralSample, reindex=True) -> None:
-        start_neuron = neural_sample.java_sample.query.neuron
+        start_neuron = neural_sample._java_sample.query.neuron
 
         g = nx.DiGraph()
         g.add_nodes_from(iterate_neurons(start_neuron))
@@ -245,7 +245,7 @@ if __name__ == "__main__":
 
         i = 108
         # built_dataset.samples[i].draw()
-        do_sample(built_dataset.samples[i], reindex=True, stage=1)
+        do_sample(list(built_dataset)[i], reindex=True, stage=1)
         plt.show()
 
         # for i, sample in tqdm(enumerate(built_dataset.samples), total=len(built_dataset.samples)):

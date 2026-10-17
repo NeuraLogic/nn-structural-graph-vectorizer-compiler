@@ -1,6 +1,6 @@
 from typing import Protocol
 
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 
 from compute_graph_vectorize.benchmarks.utils.timer import Timer, TimerResult
 from compute_graph_vectorize.datasets.dataset import BuiltDatasetInstance

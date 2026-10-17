@@ -1,12 +1,12 @@
 from collections import deque
 from typing import List
 
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 
 
 def iter_neurons(samples: List[NeuralSample]):
     queue = deque(
-        (sample.java_sample.query.neuron if isinstance(sample, NeuralSample) else sample for sample in samples)
+        (sample._java_sample.query.neuron if isinstance(sample, NeuralSample) else sample for sample in samples)
     )
 
     visited = set()

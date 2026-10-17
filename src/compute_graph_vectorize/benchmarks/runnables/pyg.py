@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 from torch_geometric.loader import DataLoader
 
 from compute_graph_vectorize.benchmarks.runnables.runnable import Runnable

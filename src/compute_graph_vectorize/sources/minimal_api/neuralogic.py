@@ -3,7 +3,7 @@ from typing import Iterable, Mapping
 
 import numpy as np
 import torch
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 
 from compute_graph_vectorize.model.ops import AggregationDef, TransformationDef
 from compute_graph_vectorize.sources.base import LayerDefinition, LayerType, WeightDefinition, is_weighted

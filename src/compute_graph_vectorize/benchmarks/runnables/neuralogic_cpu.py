@@ -1,4 +1,4 @@
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 
 from compute_graph_vectorize.benchmarks.runnables.runnable import Runnable
 from compute_graph_vectorize.benchmarks.utils.timer import Timer
@@ -31,10 +31,10 @@ class NeuraLogicCPURunnable(Runnable):
         assert combined_timer.device == self.device
 
         with forward_timer:
-            self.neuralogic(self.samples, train=False)
+            self.neuralogic(self.samples)
 
         with combined_timer:
-            self.neuralogic(self.samples, train=True)
+            self.neuralogic.train(self.samples)
 
     @property
     def device(self):

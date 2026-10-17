@@ -8,9 +8,8 @@ from compute_graph_vectorize.vectorize.pipeline.dissolve_identity_layers import 
 from compute_graph_vectorize.vectorize.pipeline.merge_same_value_facts import merge_same_value_facts
 from compute_graph_vectorize.vectorize.pipeline.merge_unit_facts import merge_unit_facts
 from compute_graph_vectorize.vectorize.pipeline.utils.pipe import PIPE
-from neuralogic.core import R, V
+from neuralogic.core import Model, R, V
 from neuralogic.dataset import Dataset
-from neuralogic.nn.base import Template
 
 
 def dataset():
@@ -41,7 +40,7 @@ def dataset():
 
 
 def template():
-    template = Template()
+    template = Model()
 
     template += R.l1_a(V.X)[10, 10] <= (R.a(V.X), R.a(V.Y), R.edge(V.X, V.Y))
     template += R.l1_b(V.X)[5, 10] <= R.a(V.X)
@@ -54,7 +53,7 @@ if __name__ == "__main__":
 
     built_dataset = template().build(nsettings).build_dataset(dataset())
 
-    network = from_neuralogic(built_dataset.samples, nsettings)
+    network = from_neuralogic(list(built_dataset), nsettings)
     func = (PIPE
         + build_initial_network
         + merge_unit_facts

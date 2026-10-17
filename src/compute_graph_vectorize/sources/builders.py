@@ -1,6 +1,6 @@
 from typing import Mapping, Sequence
 
-from neuralogic.core.builder.builder import NeuralSample
+from neuralogic.core.builder import NeuralSample
 
 from compute_graph_vectorize.sources.base import LayerDefinition
 from compute_graph_vectorize.sources.minimal_api.base import MinimalAPINetwork
