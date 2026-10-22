@@ -8,6 +8,10 @@ _TOKENIZER_REGEX = re.compile(r"(\d+\.\d+|[,\(\)\.{}]|\w+|:-|<?\[|\]>?)", re.IGN
 _RESERVED_TOKENS = {",", "(", ")", ".", "{", "}", ":-", "<[", "]>", "[", "]"}
 
 
+def _is_number_token(token: str) -> bool:
+    return re.fullmatch(r"\d+(?:\.\d+)?", token) is not None
+
+
 def tokenize(sample: str):
     return _TOKENIZER_REGEX.finditer(sample)
 
@@ -115,6 +119,18 @@ def _parse_fact(tokens_iter: _MultiIter[str], is_rule_lhs=False, is_rule_rhs=Fal
                     state = 7
                 elif token in _RESERVED_TOKENS:
                     raise ParserError()
+                elif _is_number_token(token):
+                    # Java/NeuraLogic prefixes fact names with a weight index,
+                    # e.g. `<0>a` or `<0.0>xor_at(1)`.  The tokenizer drops
+                    # the angle brackets, so a leading number followed by a
+                    # name is a weight prefix rather than the fact name.
+                    next_token = tokens_iter.next()
+                    if next_token in _RESERVED_TOKENS or _is_number_token(next_token):
+                        tokens_iter.prepend_value(next_token)
+                        name = token
+                    else:
+                        name = next_token
+                    state = 2
                 else:
                     name = token
                     state = 2

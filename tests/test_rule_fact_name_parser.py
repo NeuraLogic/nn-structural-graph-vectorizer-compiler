@@ -6,6 +6,8 @@ EXAMPLES: list[tuple[str, str]] = [
     ("<[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]> node_feature(16)", "node_feature"),
     ("<[0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]> node_feature(15)", "node_feature"),
     ("[0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0] node_feature(15)", "node_feature"),
+    ("<0>a", "a"),
+    ("<0.0>xor_at(1)", "xor_at"),
     ("l2_embed(23)", "l2_embed"),
     ("atom_embed(10)", "atom_embed"),
     ("{10, 10} l1_embed(X) :- atom_embed(Y), *edge(Y, X). [transformation=identity, aggregation=avg]", "l1_embed"),

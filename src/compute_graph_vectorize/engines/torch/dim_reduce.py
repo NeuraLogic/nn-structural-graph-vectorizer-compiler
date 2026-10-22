@@ -35,12 +35,12 @@ class SoftmaxReduceModule(_DimReduceModule):
 
 class MinReduceModule(_DimReduceModule):
     def forward(self, x: torch.Tensor):
-        return x.min(dim=self.dim)
+        return x.min(dim=self.dim).values
 
 
 class MaxReduceModule(_DimReduceModule):
     def forward(self, x: torch.Tensor):
-        return x.max(dim=self.dim)
+        return x.max(dim=self.dim).values
 
 
 _MODULES: dict[ReductionDef, Type[_DimReduceModule]] = {

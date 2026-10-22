@@ -71,7 +71,12 @@ class Scatter(_ScatterBase):
         self.reduce_func = _SCATTER_FUNC[self.reduce]
 
     def forward(self, x: torch.Tensor):
-        return self.reduce_func(x, index=self.index, dim=0)
+        out = self.reduce_func(x, index=self.index, dim=0)
+
+        if self.reduce in ("min", "max"):
+            return out[0]
+
+        return out
 
     def __len__(self):
         return self._len
@@ -86,7 +91,12 @@ class SegmentCSR(_ScatterBase):
         self.reduce_func = SEGMENT_CSR_FUNC[self.reduce]
 
     def forward(self, x: torch.Tensor):
-        return self.reduce_func(x, indptr=self.indptr)
+        out = self.reduce_func(x, indptr=self.indptr)
+
+        if self.reduce in ("min", "max"):
+            return out[0]
+
+        return out
 
     def __len__(self):
         return self._len
